@@ -47,22 +47,43 @@
                     <li><strong class="font-semibold text-black">Enrollment Date:</strong>
                         {{ $student->enrollment_date }}</li>
                 </ul>
-
-                {{-- <p class="font-semibold text-black mt-4 inline-flex">Courses:</p>
-                @if ($student->courses && $student->courses->count() > 0)
-                    <ul class="list-none ps-4">
-                        @foreach ($student->courses as $course)
-                            <li class="text-black">{{ Str::title(str_replace(['-', '_'], ' ', $course->course_name)) }} Course
-                            </li> <!-- Capitalize first letter and replace hyphens -->
-                        @endforeach
-                    </ul>
-                    @else
-                        <p>N/A</p>
-                @endif --}}
             </div>
-
         </div>
 
+        <!-- Payment Table -->
+        <h2 class="text-2xl font-semibold text-center mt-10 mb-6">Payment Details</h2>
+        <div class="overflow-x-auto">
+            <table class="table-auto w-full text-left border border-gray-200">
+                <thead class="bg-gray-100 text-gray-700">
+                    <tr>
+                        <th class="px-4 py-2 border">Payment Type</th>
+                        <th class="px-4 py-2 border">Amount</th>
+                        <th class="px-4 py-2 border">Payment Method</th>
+                        <th class="px-4 py-2 border">Payment Date</th>
+                        <th class="px-4 py-2 border">Transaction ID</th>
+                        <th class="px-4 py-2 border">Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($student->payments as $payment)
+                        <tr class="border-t">
+                            <td class="px-4 py-2 border">{{ $payment->payment_type }}</td>
+                            <td class="px-4 py-2 border">{{ number_format($payment->amount, 2) }}</td>
+                            <td class="px-4 py-2 border">{{ $payment->payment_method }}</td>
+                            <td class="px-4 py-2 border">{{ $payment->payment_date }}</td>
+                            <td class="px-4 py-2 border">{{ $payment->transaction_id ?? 'N/A' }}</td>
+                            <td class="px-4 py-2 border">{{ $payment->remarks }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="px-4 py-2 text-center text-gray-500">
+                                No payment records found.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
         <!-- Action Buttons -->
         <div class="flex justify-center mt-8 space-x-4">
@@ -93,6 +114,13 @@
                     Print
                 </a>
             </div>
+
+            <a href="{{ route('student_payments.create', $student->id) }}"
+                class="inline-flex px-5 py-2.5 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 focus:outline-none">
+                Add Payment
+            </a>
+            
+
 
         </div>
 

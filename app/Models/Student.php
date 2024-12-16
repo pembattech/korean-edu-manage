@@ -26,4 +26,14 @@ class Student extends Model
         'enrollment_date',
     ];
 
+    //   // Define the relationship to the Course model
+    //   public function courses()
+    //   {
+    //       return $this->hasMany(Course::class, 'student_id');
+    //   }
+
+    public function payments()
+    {
+        return $this->hasMany(StudentPayment::class);
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\StudentPaymentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ExamQuestionController;
 use App\Http\Controllers\ExamScoresController;
@@ -26,7 +27,33 @@ Route::middleware('auth')->group(function () {
     Route::get('exam_question/exam', [ExamQuestionController::class, 'exam'])->name('exam_question.start_exam');
 
     // -- Admin route
-    // Route::get('students', [StudentController::class, 'index'])->name('students.index');
+
+    // Create Payment Form (Add payment for a specific student)
+    Route::get('student/{student}/payments/create', [StudentPaymentController::class, 'create'])
+        ->name('student_payments.create');
+    
+    // Store Payment (Save the payment data after form submission)
+    Route::post('student/{student}/payments', [StudentPaymentController::class, 'store'])
+        ->name('student_payments.store');
+    
+    // Edit Payment Form (Edit an existing payment for a specific student)
+    Route::get('student/{student}/payments/{payment}/edit', [StudentPaymentController::class, 'edit'])
+        ->name('student_payments.edit');
+    
+    // Update Payment (Save the updated payment data)
+    Route::put('student/{student}/payments/{payment}', [StudentPaymentController::class, 'update'])
+        ->name('student_payments.update');
+    
+    // Show Payment Details (View the details of a specific payment)
+    Route::get('student/{student}/payments/{payment}', [StudentPaymentController::class, 'show'])
+        ->name('student_payments.show');
+    
+    // Delete Payment (Remove a payment record for a specific student)
+    Route::delete('student/{student}/payments/{payment}', [StudentPaymentController::class, 'destroy'])
+        ->name('student_payments.destroy');
+    
+
+    // Route::resource('student_payments', StudentPaymentController::class);
 
     Route::resource('students', StudentController::class);
     route::get('/students/{student}/print', [StudentController::class, 'printStudentDetails'])->name('students.print');

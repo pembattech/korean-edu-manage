@@ -99,6 +99,8 @@ class StudentController extends Controller
         // // Eager load the courses associated with the student
         // $student->load('courses');
 
+        $student->load('payments');
+
         return view('students.show', compact('student'));
     }
 
