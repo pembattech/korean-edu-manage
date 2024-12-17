@@ -63,20 +63,28 @@ class StudentPaymentController extends Controller
     }
 
     // Show form to edit a payment
-    public function edit($id)
+    public function edit($studentId, $paymentId)
     {
-        $payment = StudentPayment::findOrFail($id);
-        $students = Student::all();
-        return view('student_payments.edit', compact('payment', 'students'));
+        $studentPayment = StudentPayment::where('id', $paymentId)
+            ->where('student_id', $studentId)
+            ->firstOrFail();
+
+        return view('student_payments.edit', compact('studentPayment'));
     }
 
-    // Update a payment
-    public function update(Request $request, $id)
-    {
-        $payment = StudentPayment::findOrFail($id);
 
-        $request->validate([
-            'student_id' => 'required|exists:students,id',
+    // Update a payment
+    public function update(Request $request, $studentId, $paymentId)
+    {
+        // dd($request->all());
+
+        $payment = StudentPayment::where('id', $paymentId)
+            ->where('student_id', $studentId)
+            ->firstOrFail();
+
+        // dd($payment);
+
+        $validatedData = $request->validate([
             'payment_type' => 'required|string|max:50',
             'amount' => 'required|numeric|min:0',
             'payment_method' => 'required|string|max:50',
@@ -85,9 +93,14 @@ class StudentPaymentController extends Controller
             'remarks' => 'nullable|string',
         ]);
 
-        $payment->update($request->all());
-        return redirect()->route('student_payments.index')->with('success', 'Payment updated successfully!');
+        $validatedData['student_id'] = $studentId;
+
+
+        $payment->update($validatedData);
+
+        return redirect()->route('students.show', $studentId)->with('success', 'Payment updated successfully!');
     }
+
 
     // Delete a payment
     public function destroy($id)

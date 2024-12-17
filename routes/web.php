@@ -29,27 +29,28 @@ Route::middleware('auth')->group(function () {
     // -- Admin route
 
     // Create Payment Form (Add payment for a specific student)
-    Route::get('student/{student}/payments/create', [StudentPaymentController::class, 'create'])
+    Route::get('students/{student}/payments/create', [StudentPaymentController::class, 'create'])
         ->name('student_payments.create');
     
     // Store Payment (Save the payment data after form submission)
-    Route::post('student/{student}/payments', [StudentPaymentController::class, 'store'])
+    Route::post('students/{student}/payments', [StudentPaymentController::class, 'store'])
         ->name('student_payments.store');
     
     // Edit Payment Form (Edit an existing payment for a specific student)
-    Route::get('student/{student}/payments/{payment}/edit', [StudentPaymentController::class, 'edit'])
+    Route::get('students/{student}/payments/{payment}/edit', [StudentPaymentController::class, 'edit'])
         ->name('student_payments.edit');
     
     // Update Payment (Save the updated payment data)
-    Route::put('student/{student}/payments/{payment}', [StudentPaymentController::class, 'update'])
-        ->name('student_payments.update');
+    Route::put('students/{student}/payments/{payment}', [StudentPaymentController::class, 'update'])
+    ->name('student_payments.update');
+
     
     // Show Payment Details (View the details of a specific payment)
-    Route::get('student/{student}/payments/{payment}', [StudentPaymentController::class, 'show'])
+    Route::get('students/{student}/payments/{payment}', [StudentPaymentController::class, 'show'])
         ->name('student_payments.show');
     
     // Delete Payment (Remove a payment record for a specific student)
-    Route::delete('student/{student}/payments/{payment}', [StudentPaymentController::class, 'destroy'])
+    Route::delete('students/{student}/payments/{payment}', [StudentPaymentController::class, 'destroy'])
         ->name('student_payments.destroy');
     
 
