@@ -13,14 +13,14 @@
                         alt="Profile Picture">
                 @endif
 
-                <h3 class="text-xl font-semibold text-black">{{ $student->fullname }}</h3>
+                <h3 class="text-xl font-semibold text-black">{{ $student->name }}</h3>
             </div>
 
 
             <!-- Student Details -->
             <div class="flex-1 max-w-2xl p-6">
                 <ul class="list-none space-y-4">
-                    <li><strong class="font-semibold text-black">Full Name:</strong> {{ $student->fullname }}</li>
+                    <li><strong class="font-semibold text-black">Full Name:</strong> {{ $student->name }}</li>
                     <li><strong class="font-semibold text-black">Date of Birth:</strong> {{ $student->dob }}</li>
                     <li><strong class="font-semibold text-black">Gender:</strong>
                         @if ($student->gender == 'M')
@@ -46,9 +46,13 @@
                         {{ $student->parents_phone_number }}</li>
                     <li><strong class="font-semibold text-black">Enrollment Date:</strong>
                         {{ $student->enrollment_date }}</li>
+                    <li>
+                        @include('students.toggle_korean')
+                    </li>
                 </ul>
             </div>
         </div>
+
 
         <!-- Payment Table -->
         @include('student_payments.show')
@@ -84,10 +88,10 @@
             </div>
 
             <a href="{{ route('student_payments.create', $student->id) }}"
-                class="inline-flex px-5 py-2.5 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 focus:outline-none">
+                class="inline-flex px-5 py-2.5 text-sm font-medium bg-sky-50 text-sky-600 hover:bg-sky-100 hover:text-sky-700 focus:ring-sky-600 rounded-lg focus:ring-4 focus:outline-none">
                 Add Payment
             </a>
-            
+
 
 
         </div>

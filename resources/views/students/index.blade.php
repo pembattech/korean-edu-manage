@@ -70,7 +70,7 @@
                                 <td class="px-2 py-3 whitespace-nowrap">
                                     @if (!$student->profile_picture)
                                         @php
-                                            $words = explode(' ', $student->fullname);
+                                            $words = explode(' ', $student->name);
                                             $initials = '';
                                             foreach ($words as $word) {
                                                 $initials .= strtoupper($word[0]);
@@ -83,7 +83,7 @@
                                         <img class="h-20 w-20 rounded-full object-cover" src="{{ asset('assets/student_profile_pictures/' . $student->profile_picture) }}" alt="Profile Picture">
                                     @endif
                                 </td>
-                                <td class="px-2 py-3 whitespace-nowrap">{{ Str::limit($student->fullname, $limit = 20, $end = ' ...') }}</td>
+                                <td class="px-2 py-3 whitespace-nowrap">{{ Str::limit($student->name, $limit = 20, $end = ' ...') }}</td>
                                 <td class="px-2 py-3 whitespace-nowrap">
                                     @if ($student->gender == 'M')
                                         Male

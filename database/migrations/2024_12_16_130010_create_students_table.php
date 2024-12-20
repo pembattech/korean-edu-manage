@@ -15,7 +15,7 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('fullname', 100);
+            $table->string('name', 100);
             $table->date('dob');
             $table->char('gender', 1); // M, F, O
             $table->text('address');
@@ -28,6 +28,9 @@ class CreateStudentsTable extends Migration
             $table->string('profession', 100);
             $table->string('parents_phone_number', 15);
             $table->string('profile_picture')->nullable();
+            $table->decimal('total_amount_to_pay', 10, 2)->default(0);
+            $table->boolean('is_korean')->default(false);
+            $table->string('password')->nullable();
             $table->timestamps();
         });
     }

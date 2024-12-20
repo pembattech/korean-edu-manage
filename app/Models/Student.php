@@ -4,16 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Student extends Model
+
+class Student extends Authenticatable
 {
     use HasFactory;
+    use Notifiable;
 
     protected $fillable = [
         'profile_picture',
-        'fullname',
+        'name',
         'dob',
-        'marital_status',
         'gender',
         'address',
         'contact_number',
@@ -24,6 +27,9 @@ class Student extends Model
         'profession',
         'parents_phone_number',
         'enrollment_date',
+        'total_amount_to_pay',
+        'is_korean',
+        'password'
     ];
 
     //   // Define the relationship to the Course model
@@ -35,5 +41,10 @@ class Student extends Model
     public function payments()
     {
         return $this->hasMany(StudentPayment::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
     }
 }

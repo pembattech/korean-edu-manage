@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\Auth;
+
 
 use App\Models\ExamRoutine;
 use App\Models\Answer;
@@ -18,7 +20,7 @@ class ExamQuestionController extends Controller
      */
     public function index()
     {
-        if (!request()->user()->isAdmin()) {
+        if (Auth::guard('student')->check()) {
             // Get today's date in 'Y-m-d' format
             $today = now()->format('Y-m-d');
 
@@ -29,7 +31,9 @@ class ExamQuestionController extends Controller
 
 
             return view('exam_question.index', ['todayExams' => $todayExams]);
-        } else {
+        } 
+
+        if (Auth::user()->is_admin) {
             $exam_sets = ExamQuestion::select('set', DB::raw('count(*) as total_questions'))
                 ->groupBy('set')
                 ->get();

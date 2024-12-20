@@ -24,11 +24,11 @@
                     </div>
 
                     <div class="py-2">
-                        <label class="block mb-2 text-base font-medium text-gray-900" for="fullname">Full Name</label>
-                        <input type="text" name="fullname" id="fullname"
+                        <label class="block mb-2 text-base font-medium text-gray-900" for="name">Full Name</label>
+                        <input type="text" name="name" id="name"
                             class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-sm border-2 border-transparent text-gray-900 text-sm rounded-lg focus:border-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            value="{{ old('fullname') }}" required>
-                        @error('fullname')
+                            value="{{ old('name') }}" required>
+                        @error('name')
                             <div class="text-base text-red-600">{{ $message }}</div>
                         @enderror
                     </div>

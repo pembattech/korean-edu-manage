@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="p-4 max-w-5xl mx-auto">
         <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight md:text-3xl lg:text-4xl text-gray-600">
-            Add New Payment for Student: {{ $student->fullname }}
+            Add New Payment for Student: {{ $student->name }}
         </h1>
 
         <div class="p-2">

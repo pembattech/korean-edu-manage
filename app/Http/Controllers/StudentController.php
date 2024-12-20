@@ -7,6 +7,9 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Illuminate\Support\Facades\Hash;
+// use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -46,7 +49,7 @@ class StudentController extends Controller
 
         $validatedData = $request->validate([
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'fullname' => 'required|string|max:100',
+            'name' => 'required|string|max:100',
             'dob' => 'required|date',
             'gender' => 'required|in:M,F,O',
             'address' => 'required|string',
@@ -68,7 +71,6 @@ class StudentController extends Controller
             $imageName = time() . '.' . $request->profile_picture->extension();
             $request->profile_picture->move(public_path('assets/student_profile_pictures'), $imageName);
             $validatedData['profile_picture'] = $imageName;
-
         }
 
         $student = Student::create($validatedData);
@@ -127,7 +129,7 @@ class StudentController extends Controller
     {
         $validatedData = $request->validate([
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'fullname' => 'required|string|max:100',
+            'name' => 'required|string|max:100',
             'dob' => 'required|date',
             'gender' => 'required|in:M,F,O',
             'address' => 'required|string',
@@ -209,7 +211,7 @@ class StudentController extends Controller
         $html .= '
                     <div style="flex-grow: 1;">
                         <ul style="list-style: none; padding-left: 0;">
-                            <li style="font-size: 18px;"><strong style="font-weight: 600; line-height: 3rem; color: black;">Full Name:</strong> ' . $student->fullname . '</li>
+                            <li style="font-size: 18px;"><strong style="font-weight: 600; line-height: 3rem; color: black;">Full Name:</strong> ' . $student->name . '</li>
                             <li style="font-size: 18px;"><strong style="font-weight: 600; line-height: 3rem; color: black;">Date of Birth:</strong> ' . $student->dob . '</li>
                             <li style="font-size: 18px;"><strong style="font-weight: 600; line-height: 3rem; color: black;">Gender:</strong> ' . ($student->gender == "M" ? "Male" : ($student->gender == "F" ? "Female" : "Other")) . '</li>
                             <li style="font-size: 18px;"><strong style="font-weight: 600; line-height: 3rem; color: black;">Address:</strong> ' . $student->address . '</li>
@@ -245,4 +247,75 @@ class StudentController extends Controller
         // Output the generated PDF (inline in browser)
         $dompdf->stream('student_details.pdf', array('Attachment' => false)); // Set Attachment to true for download
     }
+
+    public function toggleKoreanStatus($id)
+    {
+        $student = Student::findOrFail($id);
+        $student->is_korean = !$student->is_korean;
+
+        $password = null;
+
+        if ($student->is_korean) {
+            $password = Str::random(8);
+            $student->password = Hash::make($password);
+        } else {
+            // Clear the password when toggling off Korean
+            $student->password = null;
+        }
+
+        $student->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Student Korean status toggled successfully.',
+            'is_korean' => $student->is_korean,
+            'passwd' => $password
+        ]);
+    }
+
+    // Show the login form
+    public function showLoginForm()
+    {
+        return view('students.login');
+    }
+
+    public function login(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        // Get the credentials from the request
+        $credentials = $request->only('email', 'password');
+
+        // Attempt to authenticate the student using the 'student' guard
+        if (Auth::guard('student')->attempt($credentials)) {
+            // Authentication was successful, so regenerate the session ID for security
+            session()->regenerate();
+
+            // Redirect the user to the intended route or the dashboard
+            return redirect()->intended(route('dashboard'));
+        }
+
+        // If authentication fails, return back with error messages
+        return back()->withErrors(['email' => 'Invalid credentials. Please try again.']);
+    }
+
+    public function logout()
+{
+    // Log out the student using the 'student' guard
+    Auth::guard('student')->logout();
+
+    // Invalidate the session to ensure it's properly cleared
+    session()->invalidate();
+
+    // Regenerate the session ID to prevent session fixation attacks
+    session()->regenerateToken();
+
+    // Redirect the user to the login page
+    return redirect(route('student.loginForm'));
+}
+
 }
