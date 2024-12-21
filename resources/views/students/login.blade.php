@@ -1,68 +1,59 @@
 <x-guest-layout>
-    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md w-96 space-y-8 bg-white p-8 rounded-lg shadow-md">
-            <div>
-                <h2 class="text-center text-3xl font-extrabold text-gray-900 mb-8">Student Login</h2>
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-4" :status="session('status')" />
+
+    <div class="flex justify-center">
+
+        <form method="POST" action="{{ route('student.login') }}">
+            @csrf
+            <div class=" py-3 sm:max-w-xl sm:mx-auto">
+
+                <div class=" px-4 py-10 bg-white sm:rounded-3xl sm:p-16">
+
+                    <div class="max-w-md mx-auto">
+                        <div>
+                            <h1 class="text-2xl font-semibold">Student Login</h1>
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                            <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                                <div class="">
+                                    <x-input-label for="email" :value="__('Email')" />
+                                </div>
+
+                                <div class="">
+                                    <x-text-input id="email" class="block mt-1 w-full" type="email" name="email"
+                                        :value="old('email')" required autofocus autocomplete="username" />
+                                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                </div>
+
+
+                                <!-- Password -->
+                                <div class="mt-4">
+                                    <x-input-label for="password" :value="__('Password')" />
+
+                                    <x-text-input id="password" class="block mt-1 w-full" type="password"
+                                        name="password" required autocomplete="current-password" />
+
+                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                </div>
+
+                                <div class="flex items-center mt-4">
+
+                                    <x-primary-button>
+                                        {{ __('Log in') }}
+                                    </x-primary-button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
-            <form method="POST" action="{{ route('student.login') }}" class="mt-8 space-y-6">
-                @csrf
+        </form>
 
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                    <div class="relative">
-                        <input type="email" 
-                               id="email" 
-                               name="email" 
-                               required 
-                               class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition duration-150 ease-in-out"
-                               placeholder="Enter your email">
-                    </div>
-                </div>
 
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                    <div class="relative">
-                        <input type="password" 
-                               id="password" 
-                               name="password" 
-                               required 
-                               class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition duration-150 ease-in-out"
-                               placeholder="Enter your password">
-                    </div>
-                </div>
-
-                {{-- <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <input id="remember_me" 
-                               name="remember_me" 
-                               type="checkbox"
-                               class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                        <label for="remember_me" class="ml-2 block text-sm text-gray-900">
-                            Remember me
-                        </label>
-                    </div>
-
-                    <div class="text-sm">
-                        <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
-                            Forgot your password?
-                        </a>
-                    </div>
-                </div> --}}
-
-                <div>
-                    <button type="submit"
-                            class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
-                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                            <!-- Heroicon name: lock-closed -->
-                            <svg class="h-5 w-5 text-blue-500 group-hover:text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                            </svg>
-                        </span>
-                        Sign in
-                    </button>
-                </div>
-            </form>
-        </div>
     </div>
+
 </x-guest-layout>

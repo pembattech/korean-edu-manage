@@ -46,6 +46,8 @@
                         {{ $student->parents_phone_number }}</li>
                     <li><strong class="font-semibold text-black">Enrollment Date:</strong>
                         {{ $student->enrollment_date }}</li>
+                    <li><strong class="font-semibold text-black">Total Amount to Pay:</strong>
+                        {{ $student->total_amount_to_pay }}</li>
                     <li>
                         @include('students.toggle_korean')
                     </li>

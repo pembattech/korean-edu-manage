@@ -151,7 +151,7 @@
                 <button type="submit"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
                 <button type="button" id="cancel_edit_form"
-                    class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Cancel</button>
+                    class="py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-gray-800 rounded-lg border border-gray-200 hover:bg-gray-700 focus:z-10 focus:ring-2 focus:ring-gray-100">Cancel</button>
             </div>
 
             <button type="button" id = "delete-warning"
@@ -197,6 +197,7 @@
 
 <script>
     $(document).ready(function() {
+
         function showModal() {
             $('#delete-popup-modal').removeClass('hidden');
         }
@@ -236,6 +237,8 @@
                     alert('An error occurred while deleting the question.');
                 }
             });
+
+            // window.location.reload();
         });
     });
 </script>

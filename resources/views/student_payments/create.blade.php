@@ -40,7 +40,7 @@
 
                 <div class="py-2">
                     <label class="block mb-2 text-base font-medium text-gray-900" for="payment_date">Payment Date</label>
-                    <input type="date" name="payment_date" id="payment_date"
+                    <input type="date" name="payment_date" id="payment_date" min="{{ date('Y-m-d') }}"
                         class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-sm border-2 border-transparent text-gray-900 text-sm rounded-lg focus:border-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         value="{{ old('payment_date') }}" required>
                     @error('payment_date')

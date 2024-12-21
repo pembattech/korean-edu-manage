@@ -34,7 +34,7 @@ class StudentPaymentController extends Controller
             'payment_type' => 'required|string|max:50',
             'amount' => 'required|numeric|min:0',
             'payment_method' => 'required|string|max:50',
-            'payment_date' => 'required|date',
+            'payment_date' => ['required', 'date', 'after_or_equal:today'],
             'transaction_id' => 'nullable|string|max:100',
             'remarks' => 'nullable|string',
         ]);
@@ -88,7 +88,7 @@ class StudentPaymentController extends Controller
             'payment_type' => 'required|string|max:50',
             'amount' => 'required|numeric|min:0',
             'payment_method' => 'required|string|max:50',
-            'payment_date' => 'required|date',
+            'payment_date' => ['required', 'date', 'after_or_equal:today'],
             'transaction_id' => 'nullable|string|max:100',
             'remarks' => 'nullable|string',
         ]);
