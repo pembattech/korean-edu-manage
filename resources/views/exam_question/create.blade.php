@@ -325,6 +325,7 @@
 
                         currentElement.replaceWith(fileInput);
                         optionPreview.classList.remove('hidden');
+                        optionAudioPreview.classList.add('hidden');
                     } else if (answerType == 'audio') {
                         // Create a new file input for the audio
                         const fileInput = document.createElement('input');
@@ -337,14 +338,8 @@
                             previewAudio(fileInput, optionAudioPreview); // You need to implement this function
                         };
 
-                        console.log(answerType)
-                        console.log(fileInput, optionAudioPreview)
-
                         currentElement.replaceWith(fileInput);
-
                         optionPreview.classList.add('hidden');
-
-                        console.log(optionAudioPreview);
                         optionAudioPreview.classList.remove('hidden');
 
 
@@ -358,6 +353,7 @@
 
                         currentElement.replaceWith(textInput);
                         optionPreview.classList.add('hidden');
+                        optionAudioPreview.classList.add('hidden');
                     }
                 }
             }
