@@ -61,6 +61,7 @@ class StudentController extends Controller
             'profession' => 'required|string|max:100',
             'parents_phone_number' => 'required|string|max:15',
             'enrollment_date' => 'required|date',
+            'total_amount_to_pay' => 'required|integer|min:1000'
             // 'courses' => 'required|array', // Ensure it's an array
             // 'courses.*' => 'in:programming-computer,office_package-computer,video_editing-computer,graphic_designing-computer,networking-computer,web_designing-computer,account_package-computer,english-language,japanese-language,korean-language,chinese-language,ielts-english_language,pte-english_language', // Validate each selected course
 
@@ -141,6 +142,7 @@ class StudentController extends Controller
             'profession' => 'required|string|max:100',
             'parents_phone_number' => 'required|string|max:15',
             'enrollment_date' => 'required|date',
+            'total_amount_to_pay' => 'required|integer|min:1'
             // 'computer_course' => 'required|in:CFB,DCO,DGD,OP,WD,CH,P',
             // 'language_course' => 'required|in:KR,EN,JP,HE,TU'
         ]);

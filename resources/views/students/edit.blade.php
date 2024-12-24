@@ -6,7 +6,7 @@
 
         <div class="p-2">
 
-            <form action="{{ route('students.update', $student) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('students.update', $student) }}" method="POST" enctype="multipart/form-data" novalidate>
                 @csrf
                 @method('PUT')
 
@@ -180,7 +180,7 @@
                     @enderror
                 </div>
 
-                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
 
                     <div class="py-2">
                         <label class="block mb-2 text-base font-medium text-gray-900"
@@ -200,6 +200,17 @@
                             class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-sm border-2 border-transparent text-gray-900 text-sm rounded-lg focus:border-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             value="{{ old('enrollment_date', $student->enrollment_date) }}" required>
                         @error('enrollment_date')
+                            <div class="text-base text-red-600">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+
+                    <div class="py-2">
+                        <label class="block mb-2 text-base font-medium text-gray-900" for="total_amount_to_pay">Total Amount to Pay</label>
+                        <input type="number" name="total_amount_to_pay" id="total_amount_to_pay"
+                            class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-sm border-2 border-transparent text-gray-900 text-sm rounded-lg focus:border-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            value="{{ old('total_amount_to_pay', $student->total_amount_to_pay) }}" required>
+                        @error('total_amount_to_pay')
                             <div class="text-base text-red-600">{{ $message }}</div>
                         @enderror
                     </div>
